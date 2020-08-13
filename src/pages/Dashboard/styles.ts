@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { shade } from 'polished'; // Importa o sombreamento da biblioteca polished
+import { shade } from 'polished'; // Importa o sombreamento da biblioteca polished.
+
 
 export const Title = styled.h1`
     font-size: 48px;
     color: #3a3a3a;
-    max-width:450px;
+    max-width: 450px;
     line-height:56px;
-
     margin-top: 80px;
 
 `;
@@ -54,5 +54,58 @@ export const Form = styled.form`
 `;
 
 export const Repositories = styled.div`
+    margin-top: 80px;
+    max-width: 700px;
+
+    a{
+        background: #FFF;
+        border-radius: 5px;
+        width: 100%;
+        padding: 24px;
+        display: flex;
+        text-decoration: none;
+        align-items: center;
+        /** Toda vez que você quiser aplicar um css em css que são precendidos por determinado elemento , 
+        podemos utilizar essa sintaxe. Lembrando que no exemplo abaixo o & comercial representa o elemento "pai" do encadeamento.
+
+        Concluindo, ele so irá aplicar o css abaixo se o elemento a for precendido de outro elemento a.
+        */
+        & + a { 
+            margin-top: 16px;
+        }
+    }
+
+    
+
+    img {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%; /** Utilizar 50% de border radius quando eu quiser que uma imagem fique 100% arrendondada */
+    }
+    div {
+        margin-left: 16px;
+        strong {
+            font-size: 20px;
+            color: #3D3D4D;
+        }
+        p {
+            font-size: 18px;
+            color: #a8a8b3;
+            margin-top: 4px;
+        }
+
+    }
+
+    svg {
+        margin-left: auto; /** Vai pegar todo o espaço disponivel na esquerda e aplicar, ou seja vai colocar praticamente no final do elemento. */
+        color: #CBCBD6;
+
+        &:hover {
+            transition: 0.5s;
+            transform: translateX(10px);
+            color: ${shade(0.3, '#CBCBD6')};
+        }
+    }
+
 
 `;

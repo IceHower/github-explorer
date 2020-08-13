@@ -1,6 +1,7 @@
 import React from 'react';
 import githublogo from '../../assets/githublogo.svg';
 import  { Title, Form, Repositories } from './styles';
+import { FiChevronRight } from 'react-icons/fi'; // importa o icone da flechinha apontada para direita
 
 const Dashboard: React.FC = () => {
     return (
@@ -12,13 +13,44 @@ const Dashboard: React.FC = () => {
                 <input placeholder='Digite o nome do repositório'/>
                 <button>Pesquisar</button>
             </Form>
-
+            
             <Repositories>
-                <a href="teste"></a>
+                <a href="teste">
+                    <img src={'teste'}></img>
+                    <div>
+                        <strong>rocketseat/unform</strong>
+                        <p>Está é a descrição do repositório</p>
+                    </div>
+                    <FiChevronRight  size={20}/>
+                </a>
+                <a href="teste">
+                    <img src={'teste'}></img>
+                    <div>
+                        <strong>rocketseat/unform</strong>
+                        <p>Está é a descrição do repositório</p>
+                    </div>
+                    <FiChevronRight  size={20}/>
+                </a>
+                <a href="teste">
+                    <img src={'teste'}></img>
+                    <div>
+                        <strong>rocketseat/unform</strong>
+                        <p>Está é a descrição do repositório</p>
+                    </div>
+                    <FiChevronRight  size={20}/>
+                </a>
             </Repositories>
         </div>
     )
 }
+/**
+ * Dica para saber quando usar div:
+ * - Verificar o alinhamento dos items. Ex: a imagem esta alinhada com o titulo e a descrição no eixo horizontal, 
+ *   mas o titulo e a descrição estão alinhados pelo eixo vertical, então iremos utilizar uma div e colocar dentro dela o titulo e a descrição
+ *   pois o alinhamento está diferente do "flow" principal dos items.
+ *   Então "toda vez" que trocar o eixo do alinhamento quer dizer que vai ter que utilizar um container a mais para conseguir fazer a estilização.
+ */
+
 /**
  * O codigo acima é a mesma coisa que este aqui:
  * 
