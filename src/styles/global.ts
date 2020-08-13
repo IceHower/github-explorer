@@ -11,7 +11,7 @@ export default createGlobalStyle `
     
     body {
         /** Define a cor do background, a imagen de fundo, joga ela 70% para a direita e alinha com o topo.*/ 
-        background: #F0F0F5 url(${githubBackground}) no-repeat 70% top;
+        background: #d1d1d1 url(${githubBackground}) no-repeat 70% top;
         -webkit-font-smoothing: antialiased; /** Deixa a font mais bonita menos sharp, mas só funciona no goole.*/ 
     }
 

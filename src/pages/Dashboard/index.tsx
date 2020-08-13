@@ -1,9 +1,21 @@
 import React from 'react';
+import githublogo from '../../assets/githublogo.svg';
+import  { Title, Form, Repositories } from './styles';
 
 const Dashboard: React.FC = () => {
     return (
         <div>
-            <h1>Dashboard</h1>
+            <img src={githublogo} alt='Github Explorer'/>
+            <Title>Explore repositórios no Github</Title>
+
+            <Form>
+                <input placeholder='Digite o nome do repositório'/>
+                <button>Pesquisar</button>
+            </Form>
+
+            <Repositories>
+                <a href="teste"></a>
+            </Repositories>
         </div>
     )
 }
