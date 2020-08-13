@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import githublogo from '../../assets/githublogo.svg';
 import  { Title, Form, Repositories } from './styles';
 import { FiChevronRight } from 'react-icons/fi'; // importa o icone da flechinha apontada para direita
+import api from '../../services/api'; // Importa a api do services
 
 const Dashboard: React.FC = () => {
     return (
@@ -15,22 +16,6 @@ const Dashboard: React.FC = () => {
             </Form>
             
             <Repositories>
-                <a href="teste">
-                    <img src={'teste'}></img>
-                    <div>
-                        <strong>rocketseat/unform</strong>
-                        <p>Está é a descrição do repositório</p>
-                    </div>
-                    <FiChevronRight  size={20}/>
-                </a>
-                <a href="teste">
-                    <img src={'teste'}></img>
-                    <div>
-                        <strong>rocketseat/unform</strong>
-                        <p>Está é a descrição do repositório</p>
-                    </div>
-                    <FiChevronRight  size={20}/>
-                </a>
                 <a href="teste">
                     <img src={'teste'}></img>
                     <div>
