@@ -83,7 +83,8 @@ export const Repositories = styled.div`
         border-radius: 50%; /** Utilizar 50% de border radius quando eu quiser que uma imagem fique 100% arrendondada */
     }
     div {
-        margin-left: 16px;
+        margin: 0 16px;
+        flex: 1; /** Faz a div só utilizar o espaço disponivel */
         strong {
             font-size: 20px;
             color: #3D3D4D;
