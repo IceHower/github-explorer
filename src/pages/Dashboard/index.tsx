@@ -1,6 +1,6 @@
 import React, { useState, FormEvent } from 'react';
 import githublogo from '../../assets/githublogo.svg';
-import  { Title, Form, Repositories } from './styles';
+import  { Title, Form, Repositories, Error } from './styles';
 import { FiChevronRight } from 'react-icons/fi'; // importa o icone da flechinha apontada para direita
 import api from '../../services/api'; // Importa a api do services.
 
@@ -19,34 +19,53 @@ const Dashboard: React.FC = () => {
     // Definimos que o tipo desse array é a interface de Repository criada ali em cima.
     const [repositories, setRepositories] = useState<Repository[]>([]); 
     const [newRepo, setNewRepo] = useState('');
+    const [inputError, setNewInputError] = useState('');
     // Aqui definimos que a função vai receber o event, que e do tipo FormEvent que esse por sua vez é do tip HTMLFormElement
     // HTMLFormElement -> Representa o elemento html do form.
     // FormEvent -> Representa o evento de submit do formulario, ou outros eventos que estão atrelados ao formulario.
+    function clearError() {
+        setNewInputError('');
+    }
     async function handleAddRepository(event: FormEvent<HTMLFormElement>) { 
         event.preventDefault(); // Previne o evento padrao que o formulario tem dentro do html, ou seja assim que dar submit a pagina nao recarrega.
-        // Adição de um novo Repositorio
-        // Consumir a API do Github
-        // Salvar o novo repositorio no estado.
-        const response = await api.get(`/repos/${newRepo}`);
+        if(newRepo === '') {
+            setNewInputError('Digite o autor/nome do repositório');
+            setTimeout(clearError, 3000);
+            return;
+        }
+        try {
+            const response = await api.get(`/repos/${newRepo}`);
 
-        setRepositories([...repositories, response.data]);
-        setNewRepo('');
-
+            setRepositories([...repositories, response.data]);
+            setNewRepo(''); // Faz limpar o valor do input ao final;
+        } catch(err) {
+            setNewInputError('Repositório não existe');
+            setTimeout(clearError, 3000);
+            
+        }
+       
     }
+
     return (
         <div>
             <img src={githublogo} alt='Github Explorer'/>
             <Title>Explore repositórios no Github</Title>
 
-            <Form onSubmit={handleAddRepository}>
+            <Form hasError={!! inputError} onSubmit={handleAddRepository}>
                 <input
+                // !! = estamos negando a negação, para podermos utilizar do truthy ou falsy do JS.
+                // Truthy = a variavel contem alguma coisa || Falsy = a variavel está vazia.
+                // Utilizando os 2 sinais de exclamação, estamos querendo verificar se a variavel contem algo, e caso ela contenha vamos aplicar o css.
                 // e = event, no onChange conseguimos acessar o evento, e por consequencia pegar o seu valor.
                 onChange={e => setNewRepo(e.target.value)} // Aqui toda vez que o valor do input for trocado ele ira setar no estado que armazena esse valor
                 placeholder='Digite o nome do repositório'
                 />
                 <button>Pesquisar</button>
             </Form>
-
+               { inputError && <Error> {inputError} </Error> 
+               /** Esse é um tipo de if que a segunda parte só sera executada caso a primeira seja satisfeita
+                * Que no caso é verificar se o inputError tem algum valor
+                */}
             {/** Mapea o array de repositories */}
             <Repositories>
             {repositories.map(repository => 
