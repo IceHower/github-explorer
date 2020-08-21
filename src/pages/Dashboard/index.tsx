@@ -1,8 +1,9 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 import githublogo from '../../assets/githublogo.svg';
 import  { Title, Form, Repositories, Error } from './styles';
 import { FiChevronRight } from 'react-icons/fi'; // importa o icone da flechinha apontada para direita
 import api from '../../services/api'; // Importa a api do services.
+import { Link } from 'react-router-dom'; // Importa o Link do react-router-dom.
 
 // Criamos uma interface para poder definir o tipo do nosso estado de repositories.
 interface Repository { 
@@ -17,7 +18,18 @@ interface Repository {
 const Dashboard: React.FC = () => {
     // Definimos um useState para armazenar os repositorios, e iniciara com o array vazio.
     // Definimos que o tipo desse array é a interface de Repository criada ali em cima.
-    const [repositories, setRepositories] = useState<Repository[]>([]); 
+    // O codigo abaixo inicializa o estado com os dados salvos no localStorage
+    const [repositories, setRepositories] = useState<Repository[]>(() => {
+        const storagedRepositories = localStorage.getItem('@GithubExplorer:repositories');
+
+        if(storagedRepositories) {
+            return JSON.parse(storagedRepositories);
+        } else {
+            return [];
+        }
+            
+        
+    }); 
     const [newRepo, setNewRepo] = useState('');
     const [inputError, setNewInputError] = useState('');
     // Aqui definimos que a função vai receber o event, que e do tipo FormEvent que esse por sua vez é do tip HTMLFormElement
@@ -26,6 +38,10 @@ const Dashboard: React.FC = () => {
     function clearError() {
         setNewInputError('');
     }
+    // Vai salvar no localStorage as informações do estado toda vez que o repositories for atualizado.
+    useEffect(() => {
+        localStorage.setItem('@GithubExplorer:repositories', JSON.stringify(repositories));
+    }, [repositories]);
     async function handleAddRepository(event: FormEvent<HTMLFormElement>) { 
         event.preventDefault(); // Previne o evento padrao que o formulario tem dentro do html, ou seja assim que dar submit a pagina nao recarrega.
         if(newRepo === '') {
@@ -70,7 +86,7 @@ const Dashboard: React.FC = () => {
             <Repositories>
             {repositories.map(repository => 
                 (
-                    <a key={repository.full_name} href="teste">
+                    <Link key={repository.full_name} to={`repositories/${repository.full_name}`}>
                         <img 
                         src={repository.owner.avatar_url}
                         alt={repository.owner.login}
@@ -80,7 +96,7 @@ const Dashboard: React.FC = () => {
                             <p>{repository.description}</p>
                         </div>
                         <FiChevronRight  size={20}/>
-                    </a>
+                    </Link>
                 
                 )
             )}
